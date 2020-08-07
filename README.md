@@ -1,6 +1,6 @@
 # Usage
 
-This docker file builds OpenSMTPD with rspamd filter.
+OpenSMTPD with filter-rspamd and filter-senderscore.
 
 Edit configuration at `/etc/smtpd/smtpd.conf` and mount it into the container.
 
