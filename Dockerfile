@@ -11,6 +11,7 @@ RUN apk add --no-cache opensmtpd \
     && adduser -h /var/mail/domains -s /sbin/nologin -S -D -g vmail vmail
 COPY --from=build /go/filter-rspamd/filter-rspamd /go/filter-senderscore/filter-senderscore /usr/lib/opensmtpd/
 
+VOLUME [ "/var/spool/smtpd" ]
 EXPOSE 25
 ENTRYPOINT [ "smtpd" ]
 CMD [ "-d" ]
