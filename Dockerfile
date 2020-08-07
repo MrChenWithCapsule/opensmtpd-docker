@@ -8,7 +8,8 @@ RUN cd filter-rspamd && go build && cd ../filter-senderscore && go build
 FROM alpine
 
 RUN apk add --no-cache opensmtpd \
-    && adduser -h /var/mail/domains -s /sbin/nologin -S -D -g vmail vmail
+    && adduser -h /var/mail/domains -s /sbin/nologin -S -D -g vmail vmail \
+    && mkdir /var/spool/smtpd -m 711
 COPY --from=build /go/filter-rspamd/filter-rspamd /go/filter-senderscore/filter-senderscore /usr/lib/opensmtpd/
 
 VOLUME [ "/var/spool/smtpd" ]
