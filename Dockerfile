@@ -1,18 +1,15 @@
-FROM golang:alpine AS build
+FROM debian:testing-slim AS build
+COPY filter-dkimsign/* ./
+RUN sh build.sh
 
-RUN apk add --no-cache git
-RUN git clone --depth=1 https://github.com/poolpOrg/filter-rspamd
-RUN git clone --depth=1 https://github.com/poolpOrg/filter-senderscore
-RUN cd filter-rspamd && go build && cd ../filter-senderscore && go build
-
-FROM alpine
-
-RUN apk add --no-cache opensmtpd \
-    && adduser -h /var/mail/domains -s /sbin/nologin -S -D -g vmail vmail \
-    && mkdir /var/spool/smtpd -m 711
-COPY --from=build /go/filter-rspamd/filter-rspamd /go/filter-senderscore/filter-senderscore /usr/lib/opensmtpd/
+FROM debian:testing-slim
+COPY --from=build /usr/local/libexec/smtpd/filter-dkimsign /usr/libexec/opensmtpd/filter-dkimsign
+COPY --from=build /usr/lib/libopensmtpd.so /usr/lib/libopensmtpd.so
+RUN apt-get update \
+    && apt-get install -y opensmtpd opensmtpd-filter-senderscore \
+    && echo opensmtpd > /etc/mailname \
+    && mkdir -m 711 /var/spool/smtpd \
+    && adduser --system --shell /sbin/nologin --home /var/vmail --group vmail
 
 VOLUME [ "/var/spool/smtpd" ]
-EXPOSE 25
-ENTRYPOINT [ "smtpd" ]
-CMD [ "-d" ]
+CMD [ "smtpd", "-d" ]

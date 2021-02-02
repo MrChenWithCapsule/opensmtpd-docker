@@ -1,0 +1,11 @@
+28a29
+> #include <openbsd-compat.h>
+196,198d196
+<       if (pledge("tmppath stdio", NULL) == -1)
+<               osmtpd_err(1, "pledge");
+< 
+548c546
+<       if (addtime && !dkim_signature_printf(message, "t=%lld; ", now))
+---
+>       if (addtime && !dkim_signature_printf(message, "t=%ld; ", now))
+
