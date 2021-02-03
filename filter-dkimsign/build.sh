@@ -13,7 +13,7 @@ get_source() {
 }
 
 apply_patch() {
-  patch -l "filter-dkimsign-${DKIMSIGN_VERSION}/main.c" main.patch
+    patch -l "filter-dkimsign-${DKIMSIGN_VERSION}/main.c" main.patch
 }
 
 make_libopensmtpd() {
