@@ -13,4 +13,4 @@ RUN echo opensmtpd > /etc/mailname \
     && adduser --system --uid 957 --shell /sbin/nologin --home /var/empty --group dkimsign
 
 VOLUME [ "/var/spool/smtpd" ]
-CMD [ "smtpd", "-d" ]
+CMD [ "smtpd", "-d", "-f", "/srv/config/smtpd.conf" ]
