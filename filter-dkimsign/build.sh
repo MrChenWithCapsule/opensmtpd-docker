@@ -1,6 +1,6 @@
 #!/bin/sh
 LIBOPENSMTPD_VERSION=0.5
-DKIMSIGN_VERSION=0.3
+DKIMSIGN_VERSION=0.4
 
 install_dependencies() {
     apt update
