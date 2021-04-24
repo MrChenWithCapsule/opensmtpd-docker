@@ -4,7 +4,7 @@ DKIMSIGN_VERSION=0.4
 
 install_dependencies() {
     apk update
-    apk add build-base libbsd-dev bmake curl openssl-dev libevent-dev coreutils
+    apk add build-base libbsd-dev bmake curl openssl-dev libevent-dev coreutils groff
 }
 
 get_source() {
