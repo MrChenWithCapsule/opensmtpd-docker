@@ -17,7 +17,7 @@ apply_patch() {
 }
 
 make_libopensmtpd() {
-    local MAKE="-D_GNU_SOURCE NEED_OPENBSD_COMPAT=1 NEED_RECALLOCARRAY=1 NEED_STRLCAT=1 NEED_STRLCPY=1 NEED_STRTONUM=1 make -C 'libopensmtpd-${LIBOPENSMTPD_VERSION}' -f Makefile.gnu"
+    local MAKE="CFLAGS=-D_GNU_SOURCE NEED_OPENBSD_COMPAT=1 NEED_RECALLOCARRAY=1 NEED_STRLCAT=1 NEED_STRLCPY=1 NEED_STRTONUM=1 make -C 'libopensmtpd-${LIBOPENSMTPD_VERSION}' -f Makefile.gnu"
     local INSTALL="install -o root -g root -m 644"
     local INCLUDE_PATH="/usr/include/"
 
@@ -27,7 +27,7 @@ make_libopensmtpd() {
 }
 
 make_dkimsign() {
-    local MAKE="bmake -C 'filter-dkimsign-${DKIMSIGN_VERSION}' -f Makefile"
+    local MAKE="bmake -I /usr/share/mk/ -C 'filter-dkimsign-${DKIMSIGN_VERSION}' -f Makefile"
 
     CFLAGS='-DNEED_RECALLOCARRAY -DNEED_STRLCAT -DNEED_STRLCPY -DNEED_STRTONUM -Wno-pointer-sign' env -S "$MAKE"
     mkdir -p /usr/local/man/man/man8 /usr/local/libexec/smtpd/
