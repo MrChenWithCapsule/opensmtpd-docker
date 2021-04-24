@@ -4,7 +4,7 @@ DKIMSIGN_VERSION=0.4
 
 install_dependencies() {
     apt update
-    apt install -y build-essential libbsd-dev bmake curl libssl-dev libevent-dev
+    apt install -y build-essential libbsd-dev bmake curl libssl-dev libevent-dev groff
 }
 
 get_source() {
