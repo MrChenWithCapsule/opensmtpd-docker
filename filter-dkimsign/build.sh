@@ -3,8 +3,8 @@ LIBOPENSMTPD_VERSION=0.5
 DKIMSIGN_VERSION=0.4
 
 install_dependencies() {
-    apk update
-    apk add build-base libbsd-dev bmake curl openssl-dev libevent-dev coreutils
+    apt update
+    apt install -y build-essential libbsd-dev bmake curl libssl-dev libevent-dev
 }
 
 get_source() {
@@ -17,7 +17,7 @@ apply_patch() {
 }
 
 make_libopensmtpd() {
-    local MAKE="NEED_OPENBSD_COMPAT=1 NEED_RECALLOCARRAY=1 NEED_STRLCAT=1 NEED_STRLCPY=1 NEED_STRTONUM=1 make -C 'libopensmtpd-${LIBOPENSMTPD_VERSION}' -f Makefile.gnu"
+    local MAKE="-D_GNU_SOURCE NEED_OPENBSD_COMPAT=1 NEED_RECALLOCARRAY=1 NEED_STRLCAT=1 NEED_STRLCPY=1 NEED_STRTONUM=1 make -C 'libopensmtpd-${LIBOPENSMTPD_VERSION}' -f Makefile.gnu"
     local INSTALL="install -o root -g root -m 644"
     local INCLUDE_PATH="/usr/include/"
 
